@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <title>Votaciones</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        input[type="text"], button {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-list li {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <div id="container">
+            <center>
+                <h2>Votaciones</h2>
+                <button @click="vote('A')">Votar por A</button>
+                <button @click="vote('B')">Votar por B</button>
+                <button @click="vote('C')">Votar por C</button>
+
+                <h3>Resultados</h3>
+                <div v-bind:class="{ highlight: highestVote === 'A' }">Votos para A: {{ votes.A }}</div>
+                <div v-bind:class="{ highlight: highestVote === 'B' }">Votos para B: {{ votes.B }}</div>
+                <div v-bind:class="{ highlight: highestVote === 'C' }">Votos para C: {{ votes.C }}</div>
+            </center>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                votes: {
+                    A: 0,
+                    B: 0,
+                    C: 0
+                },
+                highestVote: ''
+            },
+            methods: {
+                vote: function(option) {
+                    this.votes[option]++;
+                    this.updateHighestVote();
+                },
+                updateHighestVote: function() {
+                    const maxVotes = Math.max(this.votes.A, this.votes.B, this.votes.C);
+                    this.highestVote = Object.keys(this.votes).find(key => this.votes[key] === maxVotes);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

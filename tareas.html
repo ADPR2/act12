@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <title>Tareas</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        input[type="text"], button {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-list li {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <div id="container">
+            <center>
+            <h2>Añadir Tarea</h2>
+            <input v-model="newTask" placeholder="Introduce una tarea" type="text">
+            <select v-model="uwu">
+                <option>Alta</option>
+                <option>Media</option>
+                <option>Baja</option>
+            </select>
+            <button @click="addTask">Añadir</button>
+
+            <h3>Tareas</h3>
+            <ul class="task-list">
+                <li v-for="(task, index) in tasks">
+                    {{ task }}
+                    <button @click="removeTask(index)">Eliminar</button>
+                </li>
+            </ul>
+        </center>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                newTask: '',
+                tasks: []
+            },
+            methods:{
+                addTask: function (){
+                    if (this.newTask.trim() !== '') {
+                        this.tasks.push(this.newTask + ' - Prioridad: ' + this.uwu);
+                        this.newTask = '';
+                        this.uwu = '';
+                    }
+                },
+                removeTask: function(index) {
+                    this.tasks.splice(index, 1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
